@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batman Login</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #fdf0f7 0%, #f7d9ea 100%);
+        color: #3f2938;
+      }
+
+      .login-box {
+        width: 100%;
+        max-width: 420px;
+        padding: 40px 30px;
+        background: rgba(255, 255, 255, 0.38);
+        border: 1px solid rgba(255, 99, 170, 0.35);
+        border-radius: 22px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 25px rgba(255, 87, 172, 0.25),
+                    0 0 50px rgba(255, 87, 172, 0.12);
+      }
+
+      h1 {
+        margin: 0 0 28px;
+        text-align: center;
+        color: #d72f7c;
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        text-shadow: 0 0 12px rgba(255, 76, 178, 0.7);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #6d2d52;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(232, 94, 168, 0.7);
+        background: rgba(255, 255, 255, 0.45);
+        color: #3b2434;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.2s ease;
+      }
+
+      input:focus {
+        box-shadow: 0 0 0 3px rgba(255, 102, 180, 0.2),
+                    0 0 12px rgba(255, 76, 178, 0.5);
+        border-color: #ff4db8;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 12px;
+        padding: 14px 18px;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #fff;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ff5cb8 0%, #ff2a88 100%);
+        box-shadow: 0 0 12px rgba(255, 79, 177, 0.7),
+                    0 0 30px rgba(255, 59, 170, 0.9);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 0 18px rgba(255, 79, 177, 0.9),
+                    0 0 35px rgba(255, 59, 170, 1);
+      }
+
+      .message {
+        margin-top: 14px;
+        min-height: 22px;
+        text-align: center;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .success {
+        color: #138a42;
+      }
+
+      .error {
+        color: #a01245;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <h1>BATMAN</h1>
+
+      <form id="loginForm">
+        <div>
+          <label for="username">Name</label>
+          <input id="username" type="text" placeholder="Enter your name" required />
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="btn">LOGIN</button>
+      </form>
+
+      <div id="message" class="message"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById('loginForm');
+      const message = document.getElementById('message');
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (username === 'BATMAN' && password === 'GOTHAM123') {
+          message.textContent = 'Login successful! Welcome back, Batman.';
+          message.className = 'message success';
+          form.reset();
+        } else {
+          message.textContent = 'Invalid name or password. Try again.';
+          message.className = 'message error';
+        }
+      });
+    </script>
+  </body>
+</html>
