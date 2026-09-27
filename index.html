@@ -142,26 +142,18 @@
         color: #a01245;
       }
 
-      .cursor-line {
+      canvas#cursorCanvas {
         position: fixed;
-        left: 0;
         top: 0;
-        width: 160px;
-        height: 3px;
-        background: linear-gradient(90deg, rgba(255,115,185,0.0), rgba(255,58,160,0.95), rgba(255,115,185,0.0));
-        border-radius: 2px;
-        transform-origin: 0 50%;
+        left: 0;
         pointer-events: none;
         z-index: 3;
-        filter: drop-shadow(0 0 8px rgba(255,77,184,0.7));
-        transition: transform 0.08s linear;
-        opacity: 0.9;
-        mix-blend-mode: screen;
+        width: 100vw;
+        height: 100vh;
       }
 
       @media (max-width: 420px) {
         .star { width: 5px; height: 5px; }
-        .cursor-line { width: 110px; }
         .login-box { padding: 28px 18px; }
         h1 { font-size: 1.6rem; }
       }
@@ -190,7 +182,7 @@
       <div id="message" class="message"></div>
     </div>
 
-    <div class="cursor-line" id="cursorLine" aria-hidden="true"></div>
+    <canvas id="cursorCanvas" aria-hidden="true"></canvas>
 
     <script>
       const form = document.getElementById('loginForm');
@@ -248,47 +240,84 @@
         }, 4000);
       })();
 
-      (function cursorLine() {
-        const line = document.getElementById('cursorLine');
-        let last = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      (function cursorTrail() {
+        const canvas = document.getElementById('cursorCanvas');
+        const ctx = canvas.getContext('2d');
+        const trail = [];
+        const maxTrailLength = 30;
+        const fadeOutTime = 900;
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth * window.devicePixelRatio;
+          canvas.height = window.innerHeight * window.devicePixelRatio;
+          canvas.style.width = window.innerWidth + 'px';
+          canvas.style.height = window.innerHeight + 'px';
+          ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+        }
+
+        resizeCanvas();
+
+        function addPoint(x, y) {
+          trail.push({ x, y, createdAt: performance.now() });
+          if (trail.length > maxTrailLength) trail.shift();
+        }
+
+        function draw() {
+          const now = performance.now();
+          ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+          for (let i = 1; i < trail.length; i++) {
+            const prev = trail[i - 1];
+            const curr = trail[i];
+            const age = (now - curr.createdAt) / fadeOutTime;
+            const opacity = Math.max(0, 1 - age);
+
+            if (opacity <= 0) continue;
+
+            ctx.beginPath();
+            ctx.moveTo(prev.x, prev.y);
+            ctx.lineTo(curr.x, curr.y);
+            ctx.strokeStyle = `rgba(135, 206, 235, ${opacity})`;
+            ctx.lineWidth = 2 + opacity * 8;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = `rgba(135, 206, 235, ${opacity * 0.9})`;
+            ctx.shadowBlur = 18;
+            ctx.stroke();
+          }
+
+          ctx.shadowBlur = 0;
+
+          for (let i = trail.length - 1; i >= 0; i--) {
+            const point = trail[i];
+            const age = (now - point.createdAt) / fadeOutTime;
+            const opacity = Math.max(0, 1 - age);
+
+            if (opacity <= 0) {
+              trail.splice(i, 1);
+            }
+          }
+
+          requestAnimationFrame(draw);
+        }
 
         window.addEventListener('mousemove', (e) => {
-          const x = e.clientX;
-          const y = e.clientY;
-
-          const dx = x - last.x;
-          const dy = y - last.y;
-          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
-          const offset = 20;
-          const px = x - Math.cos(angle * Math.PI / 180) * offset;
-          const py = y - Math.sin(angle * Math.PI / 180) * offset;
-
-          line.style.transform = `translate(${px}px, ${py}px) rotate(${angle}deg)`;
-
-          const speed = Math.sqrt(dx*dx + dy*dy);
-          const baseWidth = window.innerWidth < 420 ? 110 : 160;
-          const width = Math.min(baseWidth + speed * 0.8, 360);
-          line.style.width = width + 'px';
-
-          last.x = x;
-          last.y = y;
-        });
-
-        window.addEventListener('mouseleave', () => {
-          line.style.opacity = '0';
-        });
-        window.addEventListener('mouseenter', () => {
-          line.style.opacity = '0.9';
+          addPoint(e.clientX, e.clientY);
         });
 
         window.addEventListener('touchmove', (ev) => {
           if (!ev.touches || ev.touches.length === 0) return;
           const t = ev.touches[0];
-          const e = { clientX: t.clientX, clientY: t.clientY };
-          const move = new MouseEvent('mousemove', e);
-          window.dispatchEvent(move);
+          addPoint(t.clientX, t.clientY);
         }, { passive: true });
+
+        window.addEventListener('mouseleave', () => {
+          trail.length = 0;
+        });
+
+        window.addEventListener('resize', resizeCanvas);
+
+        requestAnimationFrame(draw);
       })();
 
       window.addEventListener('resize', () => {
