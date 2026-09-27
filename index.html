@@ -11,10 +11,11 @@
 
       html, body {
         height: 100%;
+        margin: 0;
+        padding: 0;
       }
 
       body {
-        margin: 0;
         min-height: 100vh;
         display: flex;
         justify-content: center;
@@ -22,7 +23,9 @@
         font-family: Arial, Helvetica, sans-serif;
         background: linear-gradient(135deg, #fdf0f7 0%, #f7d9ea 100%);
         color: #3f2938;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 20px;
       }
 
       .stars {
@@ -59,16 +62,15 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        width: 100%;
+        max-width: 420px;
       }
 
       .pixel-cat {
         width: 80px;
         height: 80px;
-        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><style>.p{fill:%23333}.e{fill:%23ffb3d9}</style><rect class="p" x="20" y="10" width="10" height="10"/><rect class="p" x="50" y="10" width="10" height="10"/><rect class="p" x="15" y="15" width="5" height="5"/><rect class="p" x="60" y="15" width="5" height="5"/><rect class="p" x="20" y="25" width="40" height="35"/><rect class="e" x="30" y="35" width="8" height="8"/><rect class="e" x="42" y="35" width="8" height="8"/><rect class="p" x="38" y="48" width="4" height="4"/><rect class="p" x="20" y="60" width="8" height="8"/><rect class="p" x="30" y="60" width="8" height="8"/><rect class="p" x="42" y="60" width="8" height="8"/><rect class="p" x="52" y="60" width="8" height="8"/></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
         animation: catBlink 3s ease-in-out infinite;
+        display: block;
       }
 
       @keyframes catBlink {
@@ -79,23 +81,21 @@
       .login-box {
         position: relative;
         width: 100%;
-        max-width: 420px;
         padding: 40px 30px;
-        background: rgba(255, 255, 255, 0.38);
-        border: 1px solid rgba(255, 99, 170, 0.35);
-        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(255, 99, 170, 0.25);
+        border-radius: 16px;
         backdrop-filter: blur(10px);
-        box-shadow: 0 0 25px rgba(255, 87, 172, 0.25),
-                    0 0 50px rgba(255, 87, 172, 0.12);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
       }
 
       h1 {
-        margin: 0 0 18px;
+        margin: 0 0 24px;
         text-align: center;
         color: #d72f7c;
-        font-size: 2.2rem;
+        font-size: 2rem;
         letter-spacing: 2px;
-        text-shadow: 0 0 12px rgba(255, 76, 178, 0.7);
+        text-shadow: none;
       }
 
       form {
@@ -108,14 +108,16 @@
         font-size: 0.9rem;
         font-weight: 700;
         color: #6d2d52;
+        margin-bottom: 6px;
+        display: block;
       }
 
       input {
         width: 100%;
-        padding: 14px 16px;
-        border-radius: 12px;
-        border: 1px solid rgba(232, 94, 168, 0.7);
-        background: rgba(255, 255, 255, 0.45);
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: 2px solid #e8a8d0;
+        background: #fff;
         color: #3b2434;
         font-size: 1rem;
         outline: none;
@@ -123,46 +125,56 @@
       }
 
       input:focus {
-        box-shadow: 0 0 0 3px rgba(255, 102, 180, 0.2),
-                    0 0 12px rgba(255, 76, 178, 0.5);
-        border-color: #ff4db8;
+        border-color: #d72f7c;
+        box-shadow: 0 0 0 3px rgba(215, 47, 124, 0.1);
+      }
+
+      input::placeholder {
+        color: #b8959f;
       }
 
       .btn {
         border: none;
-        border-radius: 12px;
-        padding: 14px 18px;
+        border-radius: 8px;
+        padding: 12px 18px;
         font-size: 1rem;
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         color: #fff;
         cursor: pointer;
-        background: linear-gradient(135deg, #ff5cb8 0%, #ff2a88 100%);
-        box-shadow: 0 0 12px rgba(255, 79, 177, 0.7),
-                    0 0 30px rgba(255, 59, 170, 0.9);
+        background: linear-gradient(135deg, #d72f7c 0%, #b8247a 100%);
+        box-shadow: 0 4px 15px rgba(215, 47, 124, 0.3);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 6px;
       }
 
       .btn:hover {
-        transform: translateY(-2px) scale(1.01);
-        box-shadow: 0 0 18px rgba(255, 79, 177, 0.9),
-                    0 0 35px rgba(255, 59, 170, 1);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(215, 47, 124, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(0);
       }
 
       .message {
         margin-top: 14px;
         min-height: 22px;
         text-align: center;
-        font-size: 0.95rem;
-        font-weight: 700;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 8px;
+        border-radius: 6px;
       }
 
       .success {
-        color: #138a42;
+        color: #0a6b2f;
+        background: rgba(10, 107, 47, 0.08);
       }
 
       .error {
         color: #a01245;
+        background: rgba(160, 18, 69, 0.08);
       }
 
       canvas#cursorCanvas {
@@ -170,16 +182,44 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        z-index: 3;
+        z-index: 1;
         width: 100vw;
         height: 100vh;
       }
 
-      @media (max-width: 420px) {
-        .star { width: 5px; height: 5px; }
-        .login-box { padding: 28px 18px; }
-        h1 { font-size: 1.6rem; }
-        .pixel-cat { width: 60px; height: 60px; }
+      @media (max-width: 480px) {
+        body {
+          padding: 16px;
+        }
+
+        .star { 
+          width: 4px; 
+          height: 4px; 
+        }
+
+        .login-box { 
+          padding: 28px 18px; 
+        }
+
+        h1 { 
+          font-size: 1.6rem; 
+          margin-bottom: 18px;
+        }
+
+        .pixel-cat { 
+          width: 64px; 
+          height: 64px; 
+        }
+
+        input {
+          padding: 10px 12px;
+          font-size: 16px;
+        }
+
+        .btn {
+          padding: 10px 16px;
+          font-size: 0.95rem;
+        }
       }
     </style>
   </head>
@@ -187,7 +227,25 @@
     <div class="stars" id="stars"></div>
 
     <div class="login-container">
-      <div class="pixel-cat"></div>
+      <svg class="pixel-cat" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="Pixel cat">
+        <style>
+          .cat-black { fill: #333; }
+          .cat-pink { fill: #ffb3d9; }
+          .cat-white { fill: #fff; }
+          .cat-eye { fill: #000; }
+        </style>
+        <rect class="cat-black" x="20" y="30" width="40" height="35" rx="2"/>
+        <polygon class="cat-black" points="20,30 15,15 25,25"/>
+        <polygon class="cat-black" points="60,30 65,15 55,25"/>
+        <circle class="cat-white" cx="30" cy="40" r="5"/>
+        <circle class="cat-eye" cx="30" cy="40" r="3"/>
+        <circle class="cat-white" cx="50" cy="40" r="5"/>
+        <circle class="cat-eye" cx="50" cy="40" r="3"/>
+        <polygon class="cat-pink" points="40,50 38,55 42,55"/>
+        <path class="cat-black" d="M 40 55 Q 35 58 30 55" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="cat-black" d="M 40 55 Q 45 58 50 55" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <rect class="cat-black" x="25" y="65" width="30" height="12" rx="2"/>
+      </svg>
       
       <div class="login-box">
         <h1>LOGIN</h1>
@@ -206,7 +264,7 @@
           <button type="submit" class="btn">LOGIN</button>
         </form>
 
-        <div id="message" class="message"></div>
+        <div id="message" class="message" aria-live="polite" aria-atomic="true"></div>
       </div>
     </div>
 
@@ -215,26 +273,31 @@
     <script>
       const form = document.getElementById('loginForm');
       const message = document.getElementById('message');
+      let starInterval = null;
 
       form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        const username = document.getElementById('username').value.trim();
+        const username = document.getElementById('username').value.trim().toUpperCase();
         const password = document.getElementById('password').value.trim();
 
         if (username === 'BATMAN' && password === 'GOTHAM123') {
           message.textContent = 'Login successful! Welcome back, Batman.';
-          message.className = 'message success';
+          message.classList.remove('error');
+          message.classList.add('success');
           form.reset();
         } else {
           message.textContent = 'Invalid name or password. Try again.';
-          message.className = 'message error';
+          message.classList.remove('success');
+          message.classList.add('error');
         }
       });
 
-      (function createStars() {
+      function createStars() {
         const starsContainer = document.getElementById('stars');
-        const count = Math.max(Math.floor((window.innerWidth * window.innerHeight) / 60000), 12);
+        starsContainer.innerHTML = '';
+        
+        const count = Math.max(Math.floor((window.innerWidth * window.innerHeight) / 60000), 8);
 
         for (let i = 0; i < count; i++) {
           const s = document.createElement('div');
@@ -245,35 +308,42 @@
           s.style.left = x + '%';
           s.style.top = y + '%';
 
-          const size = 3 + Math.random() * 6;
+          const size = 3 + Math.random() * 5;
           s.style.width = size + 'px';
           s.style.height = size + 'px';
 
-          const dur = 2 + Math.random() * 3.5;
-          const delay = Math.random() * 3;
+          const dur = 2.5 + Math.random() * 3;
+          const delay = Math.random() * 2;
           s.style.animationDuration = dur + 's';
           s.style.animationDelay = delay + 's';
 
           starsContainer.appendChild(s);
         }
 
-        setInterval(() => {
+        if (starInterval) clearInterval(starInterval);
+
+        starInterval = setInterval(() => {
           const all = starsContainer.children;
           for (let i = 0; i < all.length; i++) {
             const el = all[i];
-            const dx = (Math.random() - 0.5) * 6;
-            const dy = (Math.random() - 0.5) * 6;
+            const dx = (Math.random() - 0.5) * 3;
+            const dy = (Math.random() - 0.5) * 3;
             el.style.transform = `translate(${dx}px, ${dy}px)`;
           }
-        }, 4000);
-      })();
+        }, 5000);
+      }
+
+      createStars();
 
       (function cursorTrail() {
         const canvas = document.getElementById('cursorCanvas');
+        if (!canvas.getContext) return;
+        
         const ctx = canvas.getContext('2d');
         const trail = [];
-        const maxTrailLength = 30;
-        const fadeOutTime = 900;
+        const maxTrailLength = 25;
+        const fadeOutTime = 600;
+        let isDrawing = false;
 
         function resizeCanvas() {
           canvas.width = window.innerWidth * window.devicePixelRatio;
@@ -288,6 +358,7 @@
         function addPoint(x, y) {
           trail.push({ x, y, createdAt: performance.now() });
           if (trail.length > maxTrailLength) trail.shift();
+          isDrawing = true;
         }
 
         function draw() {
@@ -305,12 +376,12 @@
             ctx.beginPath();
             ctx.moveTo(prev.x, prev.y);
             ctx.lineTo(curr.x, curr.y);
-            ctx.strokeStyle = `rgba(135, 206, 235, ${opacity})`;
-            ctx.lineWidth = 2 + opacity * 8;
+            ctx.strokeStyle = `rgba(215, 47, 124, ${opacity * 0.6})`;
+            ctx.lineWidth = 2 + opacity * 4;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.shadowColor = `rgba(135, 206, 235, ${opacity * 0.9})`;
-            ctx.shadowBlur = 18;
+            ctx.shadowColor = `rgba(215, 47, 124, ${opacity * 0.4})`;
+            ctx.shadowBlur = 8;
             ctx.stroke();
           }
 
@@ -326,50 +397,32 @@
             }
           }
 
-          requestAnimationFrame(draw);
+          if (isDrawing) {
+            requestAnimationFrame(draw);
+          }
         }
 
         window.addEventListener('mousemove', (e) => {
           addPoint(e.clientX, e.clientY);
+          if (!isDrawing) draw();
         });
 
         window.addEventListener('touchmove', (ev) => {
           if (!ev.touches || ev.touches.length === 0) return;
           const t = ev.touches[0];
           addPoint(t.clientX, t.clientY);
+          if (!isDrawing) draw();
         }, { passive: true });
 
         window.addEventListener('mouseleave', () => {
           trail.length = 0;
+          isDrawing = false;
         });
 
         window.addEventListener('resize', resizeCanvas);
-
-        requestAnimationFrame(draw);
       })();
 
-      window.addEventListener('resize', () => {
-        const container = document.getElementById('stars');
-        while (container.firstChild) container.removeChild(container.firstChild);
-
-        const count = Math.max(Math.floor((window.innerWidth * window.innerHeight) / 60000), 12);
-        for (let i = 0; i < count; i++) {
-          const s = document.createElement('div');
-          s.className = 'star';
-          const x = Math.random() * 100;
-          const y = Math.random() * 100;
-          s.style.left = x + '%';
-          s.style.top = y + '%';
-          const size = 3 + Math.random() * 6;
-          s.style.width = size + 'px';
-          s.style.height = size + 'px';
-          const dur = 2 + Math.random() * 3.5;
-          const delay = Math.random() * 3;
-          s.style.animationDuration = dur + 's';
-          s.style.animationDelay = delay + 's';
-          container.appendChild(s);
-        }
-      });
+      window.addEventListener('resize', createStars);
     </script>
   </body>
 </html>
