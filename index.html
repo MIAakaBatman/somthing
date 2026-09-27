@@ -52,9 +52,32 @@
         100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.6); }
       }
 
-      .login-box {
+      .login-container {
         position: relative;
         z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .pixel-cat {
+        width: 80px;
+        height: 80px;
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><style>.p{fill:%23333}.e{fill:%23ffb3d9}</style><rect class="p" x="20" y="10" width="10" height="10"/><rect class="p" x="50" y="10" width="10" height="10"/><rect class="p" x="15" y="15" width="5" height="5"/><rect class="p" x="60" y="15" width="5" height="5"/><rect class="p" x="20" y="25" width="40" height="35"/><rect class="e" x="30" y="35" width="8" height="8"/><rect class="e" x="42" y="35" width="8" height="8"/><rect class="p" x="38" y="48" width="4" height="4"/><rect class="p" x="20" y="60" width="8" height="8"/><rect class="p" x="30" y="60" width="8" height="8"/><rect class="p" x="42" y="60" width="8" height="8"/><rect class="p" x="52" y="60" width="8" height="8"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation: catBlink 3s ease-in-out infinite;
+      }
+
+      @keyframes catBlink {
+        0%, 10%, 20%, 100% { transform: scaleY(1); }
+        5%, 15% { transform: scaleY(0.3); }
+      }
+
+      .login-box {
+        position: relative;
         width: 100%;
         max-width: 420px;
         padding: 40px 30px;
@@ -156,30 +179,35 @@
         .star { width: 5px; height: 5px; }
         .login-box { padding: 28px 18px; }
         h1 { font-size: 1.6rem; }
+        .pixel-cat { width: 60px; height: 60px; }
       }
     </style>
   </head>
   <body>
     <div class="stars" id="stars"></div>
 
-    <div class="login-box">
-      <h1>LOGIN</h1>
+    <div class="login-container">
+      <div class="pixel-cat"></div>
+      
+      <div class="login-box">
+        <h1>LOGIN</h1>
 
-      <form id="loginForm">
-        <div>
-          <label for="username">Name</label>
-          <input id="username" type="text" placeholder="Enter your name" required />
-        </div>
+        <form id="loginForm">
+          <div>
+            <label for="username">Name</label>
+            <input id="username" type="text" placeholder="Enter your name" required />
+          </div>
 
-        <div>
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" required />
-        </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Enter your password" required />
+          </div>
 
-        <button type="submit" class="btn">LOGIN</button>
-      </form>
+          <button type="submit" class="btn">LOGIN</button>
+        </form>
 
-      <div id="message" class="message"></div>
+        <div id="message" class="message"></div>
+      </div>
     </div>
 
     <canvas id="cursorCanvas" aria-hidden="true"></canvas>
